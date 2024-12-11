@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Risk Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Customer Risk Dashboard</h1>
+        <!-- Customer Search -->
+        <div id="search-customer">
+            <h2>Search Customer</h2>
+            <input type="text" id="customer-id" placeholder="Enter Customer ID">
+            <button onclick="fetchCustomer()">Get Customer Details</button>
+        </div>
+        <div id="customer-details"></div>
+        <!-- Risk Prediction -->
+        <div id="predict-risk">
+            <h2>Predict Risk</h2>
+            <form onsubmit="predictRisk(event)">
+                <input type="number" id="age" placeholder="Age Encoded">
+                <input type="number" id="gender" placeholder="Gender Encoded">
+                <input type="number" step="0.1" id="sentiment" placeholder="Sentiment Polarity">
+                <button type="submit">Predict</button>
+            </form>
+            <div id="risk-result"></div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
