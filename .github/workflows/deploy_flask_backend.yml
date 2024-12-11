@@ -34,7 +34,7 @@ jobs:
 
     - name: Deploy to Azure App Service
       run: |
-        az webapp up --name <your-app-name> \
-                     --resource-group <your-resource-group> \
+        az webapp up --name 2433final \
+                     --resource-group resourcegroup-1 \
                      --runtime "PYTHON:3.10" \
-                     --location <your-region>
+                     --location "East US 2" 

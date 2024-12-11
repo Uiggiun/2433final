@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # Deploy only on changes to the main branch
+    paths:
+      - "frontend/**"
 
 jobs:
   build-and-deploy:
