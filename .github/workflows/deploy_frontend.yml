@@ -17,6 +17,7 @@ jobs:
       with:
         app_location: "frontend"                # Folder containing the frontend files
         output_location: ""
-        api_location: "backend"                        # Leave empty if backend is separate            
+        api_location: "backend"                        # Leave empty if backend is separate
+        app_artifact_location: ""               # Optional: For build artifacts
         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
         action: "upload"
