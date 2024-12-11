@@ -3,7 +3,9 @@ name: Deploy Flask Backend to Azure
 on:
   push:
     branches:
-      - main
+      - main  # Trigger this workflow on pushes to the main branch
+    paths:
+      - "backend/**"  # Trigger only when changes are made in the backend folder
 
 jobs:
   build-and-deploy:
@@ -16,12 +18,12 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.10'  # Match your Python version
 
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r backend/requirements.txt  # Correct path to requirements.txt
 
     - name: Export Environment Variables
       run: |
@@ -30,6 +32,9 @@ jobs:
         echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> $GITHUB_ENV
         echo "CONTAINER_NAME=${{ secrets.CONTAINER_NAME }}" >> $GITHUB_ENV
 
-    - name: Deploy to Azure
+    - name: Deploy to Azure App Service
       run: |
-        python app.py
+        az webapp up --name <your-app-name> \
+                     --resource-group <your-resource-group> \
+                     --runtime "PYTHON:3.10" \
+                     --location <your-region>
