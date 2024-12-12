@@ -1,4 +1,4 @@
-const backendURL = "https://2433final-bpdgfvgmamheerh5.eastus2-01.azurewebsites.net";
+const backendURL = "http://2433final-bpdgfvgmamheerh5.eastus2-01.azurewebsites.net";
 ; // Replace with the Flask backend URL
 
 // Fetch Customer Details
