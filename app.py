@@ -59,18 +59,43 @@ def test_cosmos():
         return jsonify({"error": str(e), "success": False}), 500
 
 @app.route("/get_customer/<customer_id>", methods=["GET"])
+@app.route("/get_customer/<customer_id>", methods=["GET"])
 def get_customer(customer_id):
-    """Retrieve customer data by ID"""
+    """Retrieve customer data by ID and add a recommendation quota."""
     try:
         query = f"SELECT * FROM c WHERE c.customer_id = {customer_id}"
         items = list(container.query_items(query=query, enable_cross_partition_query=True))
 
-        # Add sentiment polarity to each record
+        # Add sentiment polarity and recommendation quota to each record
         for item in items:
             if 'text' in item and item['text']:
                 item['sentiment_polarity'] = TextBlob(item['text']).sentiment.polarity
             else:
                 item['sentiment_polarity'] = None
+
+            # Calculate a recommendation quota based on patient info
+            recommendation_quota = 500
+
+            # Example logic: Adjust quota based on age, condition, and sentiment polarity
+            age = item.get('age', None)
+            condition = item.get('condition', '').lower()
+            sentiment = item.get('sentiment_polarity', 0)
+
+            if age and '-' in age:
+                age_range = [int(a) for a in age.split('-')]
+                average_age = sum(age_range) / len(age_range)
+                if average_age > 50:
+                    recommendation_quota += 10
+
+            if 'depression' in condition:
+                recommendation_quota += 20
+
+            if sentiment > 0.5:
+                recommendation_quota += 15
+            elif sentiment < 0:
+                recommendation_quota -= 10
+
+            item['recommendation_quota'] = recommendation_quota
 
         return jsonify(items), 200
     except Exception as e:
