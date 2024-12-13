@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - main  # Trigger this workflow on pushes to the main branch
-    paths:
-      - "backend/**"  # Trigger only when changes are made in the backend folder
+  
 
 jobs:
   build-and-deploy:
@@ -23,7 +22,7 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r backend/requirements.txt  # Correct path to requirements.txt
+        pip install -r requirements.txt  # Correct path to requirements.txt
     - name: Log in to Azure
       uses: azure/login@v1
       with:
