@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - main  # Deploy only on changes to the main branch
-    paths:
-      - "/"
+
 
 jobs:
   build-and-deploy:
