@@ -36,7 +36,7 @@ except Exception as e:
 
 # Load ML model and scaler
 try:
-    model = joblib.load("ml_model.pkl")
+    model = joblib.load("risk_model.pkl")
     scaler = joblib.load("scaler.pkl")
     logging.info("ML Model and Scaler loaded successfully.")
 except Exception as e:
