@@ -1,4 +1,4 @@
-const backendURL = "2433final-bpdgfvgmamheerh5.eastus2-01.azurewebsites.net";
+const backendURL = "2433dbfinal-insurance-eegca7hagwgrbsdg.eastus2-01.azurewebsites.net";
 
 // Fetch Customer Details
 function fetchCustomer() {
