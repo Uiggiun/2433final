@@ -8,7 +8,6 @@ function updateElementContent(elementId, content) {
     }
 }
 
-// Fetch Customer Details
 async function fetchCustomer() {
     const customerId = document.getElementById("customer-id").value;
     if (!customerId) {
@@ -22,10 +21,13 @@ async function fetchCustomer() {
 
         let html = "<h3>Customer Details</h3>";
         if (data.length > 0) {
+            const keysToRemove = ["_attachments", "_etag", "_rid", "_self", "_ts"];
             data.forEach(item => {
                 html += "<div class='customer-details'>";
                 for (const [key, value] of Object.entries(item)) {
-                    html += `<p><b>${key}:</b> ${value}</p>`;
+                    if (!keysToRemove.includes(key)) {
+                        html += `<p><b>${key}:</b> ${value}</p>`;
+                    }
                 }
                 html += "</div><hr>";
             });
@@ -38,6 +40,7 @@ async function fetchCustomer() {
         updateElementContent("customer-details", "<p>An error occurred while fetching customer details.</p>");
     }
 }
+
 
 
 // Predict Risk
