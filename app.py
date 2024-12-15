@@ -37,7 +37,7 @@ except Exception as e:
 # Load ML model and scaler
 try:
     model = joblib.load("risk_model.pkl")
-    scaler = joblib.load("scaler.pkl")
+    scaler = joblib.load("scaler.pkl") 
     logging.info("ML Model and Scaler loaded successfully.")
 except Exception as e:
     logging.error("Error loading model/scaler: %s", e)
@@ -101,6 +101,9 @@ def get_customer(customer_id):
     except Exception as e:
         logging.error("Error in /get_customer: %s", e)
         return jsonify({"error": str(e), "success": False}), 500
+
+model = joblib.load('risk_model.pkl')
+scaler = joblib.load('scaler.pkl')
 
 @app.route("/predict_risk", methods=["POST"])
 def predict_risk():
