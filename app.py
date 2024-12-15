@@ -110,20 +110,26 @@ def predict_risk():
         if not isinstance(data, list) or len(data) != 3:
             return jsonify({"error": "Invalid input. Expected an array of 3 features.", "success": False})
 
-        # Sentiment analysis
-        sentiment_text = data[2]
-        sentiment_score = TextBlob(sentiment_text).sentiment.polarity
+        # Ensure inputs are numeric
+        age, gender, sentiment_score = data
+        if not isinstance(age, (int, float)) or not isinstance(gender, (int, float)) or not isinstance(sentiment_score, (int, float)):
+            return jsonify({"error": "All features (age, gender, sentiment polarity) must be numeric.", "success": False})
 
-        # Prepare input for model
-        features = np.array([[data[0], data[1], sentiment_score]])
+        # Prepare input for the model
+        features = np.array([[age, gender, sentiment_score]])
         scaled_features = scaler.transform(features)
         risk_score = model.predict(scaled_features)[0]
         probability = model.predict_proba(scaled_features).max()
 
-        return jsonify({"risk_score": int(risk_score), "probability": probability, "success": True})
+        return jsonify({
+            "risk_score": int(risk_score),
+            "probability": float(probability),
+            "success": True
+        })
     except Exception as e:
         logging.error("Error in /predict_risk: %s", e)
         return jsonify({"error": str(e), "success": False})
+
 
 # Run the app
 if __name__ == "__main__":
