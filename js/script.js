@@ -46,12 +46,13 @@ async function fetchCustomer() {
 // Predict Risk
 async function predictRisk(event) {
     event.preventDefault();
+
     const age = document.getElementById("age").value;
     const gender = document.getElementById("gender").value;
     const sentiment = document.getElementById("sentiment").value;
 
-    if (isNaN(age) || isNaN(gender) || isNaN(sentiment)) {
-        updateElementContent("risk-result", "<p>Invalid input data. Please provide valid numbers.</p>");
+    if (!age || !gender || !sentiment) {
+        updateElementContent("risk-result", "<p>Please enter all fields.</p>");
         return;
     }
 
@@ -59,17 +60,23 @@ async function predictRisk(event) {
         const response = await fetch(`${backendURL}/predict_risk`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ features: [parseInt(age), parseInt(gender), parseFloat(sentiment)] })
+            body: JSON.stringify({
+                features: [parseFloat(age), parseFloat(gender), parseFloat(sentiment)]
+            })
         });
+
         const data = await response.json();
-
-        const resultHtml = data.success
-            ? `<p>Risk Score: ${data.risk_score}</p><p>Probability: ${data.probability}</p>`
-            : `<p>Error: ${data.error}</p>`;
-
-        updateElementContent("risk-result", resultHtml);
+        if (data.success) {
+            updateElementContent("risk-result", `
+                <p><b>Risk Score:</b> ${data.risk_score}</p>
+                <p><b>Probability:</b> ${data.probability.toFixed(2)}</p>
+            `);
+        } else {
+            updateElementContent("risk-result", `<p>Error: ${data.error}</p>`);
+        }
     } catch (err) {
         console.error(err);
         updateElementContent("risk-result", "<p>An error occurred while predicting risk.</p>");
     }
 }
+
