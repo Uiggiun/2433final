@@ -23,11 +23,11 @@ async function fetchCustomer() {
         let html = "<h3>Customer Details</h3>";
         if (data.length > 0) {
             data.forEach(item => {
-                html += `
-                    <p><b>Customer ID:</b> ${item.customer_id}</p>
-                    <p><b>Condition:</b> ${item.condition}</p>
-                    <p><b>Sentiment Polarity:</b> ${item.sentiment_polarity}</p>
-                `;
+                html += "<div class='customer-details'>";
+                for (const [key, value] of Object.entries(item)) {
+                    html += `<p><b>${key}:</b> ${value}</p>`;
+                }
+                html += "</div><hr>";
             });
         } else {
             html += "<p>No customer found.</p>";
@@ -38,6 +38,7 @@ async function fetchCustomer() {
         updateElementContent("customer-details", "<p>An error occurred while fetching customer details.</p>");
     }
 }
+
 
 // Predict Risk
 async function predictRisk(event) {
