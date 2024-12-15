@@ -1,4 +1,4 @@
-const backendURL = "2433dbfinal-insurance-eegca7hagwgrbsdg.eastus2-01.azurewebsites.net";
+const backendURL = "https://2433dbfinal-insurance-eegca7hagwgrbsdg.eastus2-01.azurewebsites.net/";
 
 // Helper function to update DOM elements
 function updateElementContent(elementId, content) {
